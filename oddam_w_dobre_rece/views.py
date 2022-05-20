@@ -12,12 +12,18 @@ class LandingPage(View):
             .distinct()
             .count()
         )
+        fundations = Institution.objects.filter(type='Foundation')
+        non_governmental_organization = Institution.objects.filter(type='Non-governmental organization')
+        local_collection = Institution.objects.filter(type='Local collection')
         return render(
             request,
             "index.html",
             {
                 "sum_of_donations": sum_of_donations,
                 "sum_of_supported_institution": sum_of_supported_institution,
+                "fundations": fundations,
+                "non_governmental_organization": non_governmental_organization,
+                "local_collection": local_collection,
             },
         )
 
