@@ -26,7 +26,7 @@ class Institution(models.Model):
 
 
 class Donation(models.Model):
-    quantity = models.IntegerField()
+    quantity = models.PositiveIntegerField()
     categories = models.ManyToManyField(Category)
     institution = models.ForeignKey(Institution, on_delete=models.CASCADE)
     address = models.CharField(max_length=70)
