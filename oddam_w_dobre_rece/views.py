@@ -1,7 +1,25 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
+from django.contrib.auth import login
+from django.contrib import messages
 
 from oddam_w_dobre_rece.models import Donation, Institution
+from .forms import RegisterForm
+
+def register(response):
+    if response.method == "POST":
+        form = RegisterForm(response.POST)
+        if form.is_valid():
+            try:
+                form.save()
+                return redirect("/login")
+            except:
+                messages.error(response,"Użytkownik o podanym Emailu istnieje!")
+    else:
+        form = RegisterForm()
+    return render(response, "register.html", {"form": form})
+    
+    
 
 
 class LandingPage(View):
