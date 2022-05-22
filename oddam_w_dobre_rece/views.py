@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.views import View
-from django.contrib.auth import login
 from django.contrib import messages
 
-from oddam_w_dobre_rece.models import Donation, Institution
+from oddam_w_dobre_rece.models import Category, Donation, Institution
 from .forms import RegisterForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 
 def register(response):
     if response.method == "POST":
@@ -46,9 +47,12 @@ class LandingPage(View):
         )
 
 
-class AddDonation(View):
+class AddDonation(LoginRequiredMixin, View):
+    login_url = reverse_lazy('login')
     def get(self, request):
-        return render(request, "form.html")
+        categories = Category.objects.all()
+        institutions = Institution.objects.all()
+        return render(request, "form.html", {"categories": categories, "institutions": institutions})
 
 
 class ConfrimDonation(View):
