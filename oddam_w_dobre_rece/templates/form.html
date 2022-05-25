@@ -4,6 +4,7 @@
 <header class="header--form-page">
 {% endblock %}
 {% block endheader %}
+
   <div class="slogan container container--90">
     <div class="slogan--item">
       <h1>
@@ -63,7 +64,7 @@
         {% for category in categories %}
         <div class="form-group form-group--checkbox">
           <label>
-            <input type="checkbox" name="categories" value="clothes-to-use" />
+            <input type="checkbox" id="categories"name="categories" class="categories" value="{{category.id}}" />
             <span class="checkbox"></span>
             <span class="description">{{category}}</span>
           </label>
@@ -71,7 +72,7 @@
         {% endfor %}
 
         <div class="form-group form-group--buttons">
-          <button type="button" class="btn next-step">Dalej</button>
+          <button type="button" id="firstBtn" class="btn next-step">Dalej</button>
         </div>
       </div>
 
@@ -98,7 +99,9 @@
       <div data-step="3">
         <h3>Wybierz organizacje, której chcesz pomóc:</h3>
         {% for institution in institutions %}
-        <div class="form-group form-group--checkbox">
+        <div class="form-group form-group--checkbox organizations" data-categories="{% for cat in institution.categories.all %}
+        {{cat.id}}, 
+        {% endfor %}">
           <label>
             <input type="radio" name="organization" value="old" />
             <span class="checkbox radio"></span>

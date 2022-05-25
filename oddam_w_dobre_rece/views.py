@@ -7,18 +7,18 @@ from .forms import RegisterForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
-def register(response):
-    if response.method == "POST":
-        form = RegisterForm(response.POST)
+def register(request):
+    if request.method == "POST":
+        form = RegisterForm(request.POST)
         if form.is_valid():
             try:
                 form.save()
                 return redirect("/login")
             except:
-                messages.error(response,"Użytkownik o podanym Emailu istnieje!")
+                messages.error(request,"Użytkownik o podanym Emailu istnieje!")
     else:
         form = RegisterForm()
-    return render(response, "register.html", {"form": form})
+    return render(request, "register.html", {"form": form})
     
     
 
