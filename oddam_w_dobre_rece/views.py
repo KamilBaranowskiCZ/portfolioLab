@@ -3,9 +3,10 @@ from django.views import View
 from django.contrib import messages
 
 from oddam_w_dobre_rece.models import Category, Donation, Institution
-from .forms import RegisterForm
+from .forms import RegisterForm, DonationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+from django.contrib.auth import get_user
 
 def register(request):
     if request.method == "POST":
@@ -52,7 +53,10 @@ class AddDonation(LoginRequiredMixin, View):
     def get(self, request):
         categories = Category.objects.all()
         institutions = Institution.objects.all()
-        return render(request, "form.html", {"categories": categories, "institutions": institutions})
+        name = get_user(self.request)
+        donation_form = DonationForm(
+            initial={"user": name})
+        return render(request, "form.html", {"categories": categories, "institutions": institutions, "donation_form": donation_form})
 
 
 class ConfrimDonation(View):
