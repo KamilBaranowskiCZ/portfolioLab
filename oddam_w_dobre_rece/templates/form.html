@@ -101,7 +101,7 @@
         {% for institution in institutions %}
         <div class="form-group form-group--checkbox organizations" data-categories="{% for cat in institution.categories.all %}
         {{cat.id}}, 
-        {% endfor %}">
+        {% endfor %}" >
           <label>
             <input type="radio" name="organization" value="old" />
             <span class="checkbox radio"></span>
@@ -216,11 +216,16 @@
 
         <div class="form-group form-group--buttons">
           <button type="button" class="btn prev-step">Wstecz</button>
-          <button type="submit" class="btn">Potwierdzam</button>
+          <button type="submit" id="fifthBtn" class="btn">Potwierdzam</button>
         </div>
       </div>
     </form>
   </div>
+  <form class="myform" action = "" method = "post">
+    {% csrf_token %}
+    {{donation_form}}
+    <input type="submit" value="Dodaj komentarz">
+</form>
 </section>
 {% endblock %}
 {% block script %}

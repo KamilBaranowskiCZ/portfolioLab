@@ -4,14 +4,14 @@ document.getElementById('firstBtn').addEventListener('click', function(){
 });
 
 function checkInstitutions() {
-    const categories = []
+    categoriesID = []
     var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
 
     for (var i = 0; i < checkboxes.length; i++) {
-        categories.push(checkboxes[i].value)
+        categoriesID.push(checkboxes[i].value)
 
     }
-    return categories
+    return categoriesID
 }
 
 function institutionNames() {
@@ -34,9 +34,9 @@ function setInstitutions() {
 
     for (var i = 0; i < institutions.length; i++) {
         institutions_values = institutions[i].getAttribute('data-categories')
-
-        const arr = checkInstitutions()
-        const contains = arr.some(element => {
+        
+        const checkedInstitutions = checkInstitutions()
+        const contains = checkedInstitutions.every(element => {
             if (institutions_values.includes(element)) {
                 return true;
             }
@@ -71,6 +71,7 @@ function getInstitutions() {
 
 document.getElementById('forthBtn').addEventListener('click', function(){
     getAddress();
+    fillSummary();
     fillForm();
 });
 
@@ -87,12 +88,11 @@ function getAddress() {
                 "postcode": postcode, "phone": phone, 
                 "date": date, "time": time, 
                 "more_info": more_info}
-    console.log(addressDictionary)
     return addressDictionary
 }
 
 
-function fillForm() {
+function fillSummary() {
     document.getElementById("donatedBags").innerHTML= bags + " worków " +  categoriesNames ;
     document.getElementById("donatedFoundations").innerHTML= "Dla fundacji: " + title ;
     document.getElementById("donatedStreet").innerHTML = addressDictionary["street"] ;
@@ -102,4 +102,33 @@ function fillForm() {
     document.getElementById("donatedDate").innerHTML = addressDictionary["date"] ;
     document.getElementById("donatedHour").innerHTML = addressDictionary["time"] ;
     document.getElementById("donatedComments").innerHTML = addressDictionary["more_info"] ;
+}
+
+
+// document.getElementById('fifthBtn').addEventListener('click', function(){
+//     fillForm();
+// });
+function fillForm() {
+    document.getElementById("id_quantity").value= bags;
+    document.getElementById("id_address").value = addressDictionary["street"];
+    document.getElementById("id_city").value = addressDictionary["city"];
+    document.getElementById("id_zip_code").value = addressDictionary["postcode"];
+    document.getElementById("id_phone_number").value = addressDictionary["phone"];
+    document.getElementById("id_pick_up_date").value = addressDictionary["date"];
+    document.getElementById("id_pick_up_time").value = addressDictionary["time"];
+    document.getElementById("id_pick_up_comment").value = addressDictionary["more_info"];
+    selectedCategories = document.getElementById("id_categories").options;
+    for (var i=0; i<categoriesID.length; i++){
+        for (var j=0; j<selectedCategories.length; j++) {
+            if (selectedCategories[j].getAttribute('value') == categoriesID[i]) {
+                selectedCategories[j].selected = true;
+            }
+        }
+    }
+    selectedInstitutions = document.getElementById("id_institution").options;
+    for (var i=0; i<selectedInstitutions.length; i++){
+        if (selectedInstitutions[i].innerHTML == title) {
+            selectedInstitutions[i].selected = true;
+        }
+    }
 }
