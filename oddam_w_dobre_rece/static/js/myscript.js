@@ -103,32 +103,3 @@ function fillSummary() {
     document.getElementById("donatedHour").innerHTML = addressDictionary["time"] ;
     document.getElementById("donatedComments").innerHTML = addressDictionary["more_info"] ;
 }
-
-
-// document.getElementById('fifthBtn').addEventListener('click', function(){
-//     fillForm();
-// });
-function fillForm() {
-    document.getElementById("id_quantity").value= bags;
-    document.getElementById("id_address").value = addressDictionary["street"];
-    document.getElementById("id_city").value = addressDictionary["city"];
-    document.getElementById("id_zip_code").value = addressDictionary["postcode"];
-    document.getElementById("id_phone_number").value = addressDictionary["phone"];
-    document.getElementById("id_pick_up_date").value = addressDictionary["date"];
-    document.getElementById("id_pick_up_time").value = addressDictionary["time"];
-    document.getElementById("id_pick_up_comment").value = addressDictionary["more_info"];
-    selectedCategories = document.getElementById("id_categories").options;
-    for (var i=0; i<categoriesID.length; i++){
-        for (var j=0; j<selectedCategories.length; j++) {
-            if (selectedCategories[j].getAttribute('value') == categoriesID[i]) {
-                selectedCategories[j].selected = true;
-            }
-        }
-    }
-    selectedInstitutions = document.getElementById("id_institution").options;
-    for (var i=0; i<selectedInstitutions.length; i++){
-        if (selectedInstitutions[i].innerHTML == title) {
-            selectedInstitutions[i].selected = true;
-        }
-    }
-}

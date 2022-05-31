@@ -1,0 +1,47 @@
+table{
+    font-size: 20px;
+    border-collapse: collapse;
+}
+table, th, td {
+    border: 1px solid;
+  }
+
+.is_taken{
+    text-align: center;
+}
+
+.takenDonation{
+    background-color: transparent;
+}
+
+.notTakenDonation{
+    background-color: rgb(211, 203, 187);
+}
+
+.btnStack {
+    font-family: Oswald;
+    background-color: rgb(211, 203, 187);
+    color: #000;
+    text-decoration: none;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.428571429;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    width: 100%;
+  }
+  a.btnStack:hover {
+    background-color: #000;
+    color: #fff;
+  }

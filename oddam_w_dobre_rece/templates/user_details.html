@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block startheader %}
+<header>
+    {% endblock %}
+    {% block endheader %}
+</header>
+{% endblock %}
+{% block content %}
+<h1>Imię: {{user.first_name}}</h1>
+<h1>Nazwisko: {{user.last_name}}</h1>
+<h1>E-mail użytkownika: {{user.email}}</h1>
+<h1>
+    <a href="/change_password">Zmień hasło</a>
+</h1>
+</section>
+{% endblock %}
