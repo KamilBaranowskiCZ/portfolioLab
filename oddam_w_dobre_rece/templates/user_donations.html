@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block startheader %}
+<header>
+    {% endblock %}
+    {% block endheader %}
+</header>
+{% endblock %}
+{% block content %}
+<table>
+    <tr>
+      <th>Ilość worków</th>
+      <th>Dla fundacji</th>
+      <th>Kategorie</th>
+      <th>Umówiona data odbioru</th>
+      <th>Data odbioru</th>
+      <th>Odebrany</th>
+    </tr>
+    {% for donation in donations %}
+    <tr class="{% if donation.is_taken == False %}
+    takenDonation
+    {% else %}
+    notTakenDonation
+    {% endif %}">
+      <td>{{donation.quantity}}</td>
+      <td>{{donation.institution}}</td>
+      <td>{{donation.categories.all|join:", "}}</td>
+      <td>{{donation.pick_up_date}}, {{donation.pick_up_time}}</td>
+      <td>
+          {% if donation.taken_date == Null %}
+          Nie odebrano
+          {% else %}
+          {{donation.taken_date}}
+          {% endif %}
+        </td>
+      <td class="is_taken">    
+        {% if donation.is_taken == False %}
+        &#10008
+        {% else %}
+        &#10004
+        {% endif %}
+        </td>
+        <td>
+            {% if donation.is_taken == False %}
+            <a href ="/user_donations/pickup/{{ donation.id }}/"class="btnStack">Odebrane</a>
+        {% else %}
+            <a href ="/user_donations/cancelpickup/{{ donation.id }}/"class="btnStack">Nie odebrane</a>
+        {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+  </table> 
+</section>
+{% endblock %}

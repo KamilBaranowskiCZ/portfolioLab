@@ -58,9 +58,13 @@
       <p>kurier przyjedzie w dogodnym terminie</p>
     </div>
   </div>
-
+  {% if user.is_authenticated %}
+  <a href="{% url 'adddonation' %}#register-page" class="btn btn--large">Przekaż dary</a>
+</section>
+  {% else %}
   <a href="{% url 'register' %}#register-page" class="btn btn--large">Załóż konto</a>
 </section>
+{% endif %}
 
 <section id="about-us" class="about-us">
   <div class="about-us--text">
@@ -86,7 +90,7 @@
     <p>W naszej bazie znajdziesz listę zweryfikowanych Fundacji, z którymi współpracujemy. Możesz sprawdzić czym się
       zajmują, komu pomagają i czego potrzebują.</p>
 
-    {% for fundation in fundations %}
+    {% for fundation in all_foundations %}
 
     <ul class="help--slides-items">
       <li>
@@ -101,14 +105,19 @@
       </li>
     </ul>
     {% endfor %}
-    <!-- Pagination
-        <ul class="help--slides-pagination">
-          <li><a href="#" class="btn btn--small btn--without-border active" data-page="1">1</a></li>
-          <li><a href="#" class="btn btn--small btn--without-border" data-page="2">2</a></li>
-          <li><a href="#" class="btn btn--small btn--without-border" data-page="3">3</a></li>
-        </ul>
-        -->
+    <div class="pagination">
+      {% if all_foundations.has_previous %}
+        <a href="?page=1#help">&laquo Pierwsza</a>
+        <a href="?page={{all_foundations.previous_page_number}}#help">Poprzednia</a>
+      {% endif %}
+      Strona {{all_foundations.number}} z {{all_foundations.paginator.num_pages}}
+      {% if all_foundations.has_next %}
+        <a href="?page={{all_foundations.next_page_number}}#help">Następna</a>
+        <a href="?page={{all_foundations.paginator.num_pages}}#help">&raquo Ostatnia</a>
+      {% endif %}
+      </div>
   </div>
+
 
 
   <!-- SLIDE 2 -->
@@ -116,7 +125,7 @@
     <p>W naszej bazie znajdziesz listę zweryfikowanych organizacji pozarządowych, z którymi współpracujemy. Możesz sprawdzić czym się
       zajmują, komu pomagają i czego potrzebują.</p>
 
-      {% for organization in non_governmental_organization %}
+      {% for organization in all_non_governmental_organization %}
 
       <ul class="help--slides-items">
         <li>
@@ -131,16 +140,17 @@
         </li>
       </ul>
       {% endfor %}
-
-    <!-- Pagination
-        <ul class="help--slides-pagination">
-          <li><a href="#" class="btn btn--small btn--without-border active" data-page="1">1</a></li>
-          <li><a href="#" class="btn btn--small btn--without-border" data-page="2">2</a></li>
-          <li><a href="#" class="btn btn--small btn--without-border" data-page="3">3</a></li>
-          <li><a href="#" class="btn btn--small btn--without-border" data-page="4">4</a></li>
-          <li><a href="#" class="btn btn--small btn--without-border" data-page="5">5</a></li>
-        </ul>
-        -->
+      <div class="pagination">
+        {% if all_non_governmental_organization.has_previous %}
+          <a href="?page=1#help">&laquo Pierwsza</a>
+          <a href="?page={{all_non_governmental_organization.previous_page_number}}#help">Poprzednia</a>
+        {% endif %}
+        Strona {{all_non_governmental_organization.number}} z {{all_non_governmental_organization.paginator.num_pages}}
+        {% if all_non_governmental_organization.has_next %}
+          <a href="?page={{all_non_governmental_organization.next_page_number}}#help">Następna</a>
+          <a href="?page={{all_non_governmental_organization.paginator.num_pages}}#help">&raquo Ostatnia</a>
+        {% endif %}
+        </div>
   </div>
 
   <!-- SLIDE 3 -->
@@ -148,7 +158,7 @@
     <p>W naszej bazie znajdziesz listę lokalnych zbiórek, z którymi współpracujemy. Możesz sprawdzić czym się
       zajmują, komu pomagają i czego potrzebują.</p>
     <ul class="help--slides-items">
-{% for collection in local_collection %}
+{% for collection in all_local_collection %}
 
       <ul class="help--slides-items">
         <li>
@@ -163,13 +173,17 @@
         </li>
       </ul>
       {% endfor %}
-
-    <!-- Pagination
-        <ul class="help--slides-pagination">
-          <li><a href="#" class="btn btn--small btn--without-border active" data-page="1">1</a></li>
-          <li><a href="#" class="btn btn--small btn--without-border" data-page="2">2</a></li>
-        </ul>
-        -->
+      <div class="pagination">
+        {% if all_local_collection.has_previous %}
+          <a href="?page=1#help">&laquo Pierwsza</a>
+          <a href="?page={{all_local_collection.previous_page_number}}#help">Poprzednia</a>
+        {% endif %}
+        Strona {{all_local_collection.number}} z {{all_local_collection.paginator.num_pages}}
+        {% if all_local_collection.has_next %}
+          <a href="?page={{all_local_collection.next_page_number}}#help">Następna</a>
+          <a href="?page={{all_local_collection.paginator.num_pages}}#help">&raquo Ostatnia</a>
+        {% endif %}
+        </div>
   </div>
 </section>
 {% endblock %}

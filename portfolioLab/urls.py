@@ -16,17 +16,50 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include, re_path
 from django.contrib.auth import views as auth_views
-from oddam_w_dobre_rece.views import LandingPage, AddDonation, Login, Register, ConfrimDonation, register
-from oddam_w_dobre_rece.forms import UserLoginForm
+from oddam_w_dobre_rece.views import (
+    LandingPage,
+    AddDonation,
+    ConfrimDonation,
+    register,
+    UserDetails,
+    UserDonations,
+    PickUpDonation,
+    CancelPickUpDonation,
+)
+from oddam_w_dobre_rece.forms import UserLoginForm,PasswordChangeForm
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls),
     path("", LandingPage.as_view(), name="index"),
     path("form/", AddDonation.as_view(), name="adddonation"),
     path("form-confirm/", ConfrimDonation.as_view(), name="confirmdonation"),
-    re_path(r'^login/$',auth_views.LoginView.as_view(template_name='login.html',authentication_form=UserLoginForm
-            ),name='login'),
+    re_path(
+        r"^login/$",
+        auth_views.LoginView.as_view(
+            template_name="login.html", authentication_form=UserLoginForm
+        ),
+        name="login",
+    ),
+        re_path(
+        r"^change_password/$",
+        auth_views.PasswordChangeView.as_view(
+            template_name="change_password.html",form_class=PasswordChangeForm, success_url = '/'
+        ),
+        name="change_password",
+    ),
     path("", include("django.contrib.auth.urls")),
-    path("register/", register , name="register"),
+    path("register/", register, name="register"),
+    path("user_details/", UserDetails.as_view(), name="userdetails"),
+    path("user_donations/", UserDonations.as_view(), name="userdonations"),
+    path(
+        "user_donations/pickup/<int:donation_id>/",
+        PickUpDonation.as_view(),
+        name="pickupdonation",
+    ),
+        path(
+        "user_donations/cancelpickup/<int:donation_id>/",
+        CancelPickUpDonation.as_view(),
+        name="cancelpickupdonation",
+    ),
 ]
