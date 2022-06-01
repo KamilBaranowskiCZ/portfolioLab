@@ -25,6 +25,7 @@ from oddam_w_dobre_rece.views import (
     UserDonations,
     PickUpDonation,
     CancelPickUpDonation,
+    UserProfileEdit,
 )
 from oddam_w_dobre_rece.forms import UserLoginForm,PasswordChangeForm
 
@@ -62,4 +63,5 @@ urlpatterns = [
         CancelPickUpDonation.as_view(),
         name="cancelpickupdonation",
     ),
+    path("user_details/<int:user_id>/", UserProfileEdit.as_view(), name="edituserdetails"),
 ]

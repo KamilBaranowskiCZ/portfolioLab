@@ -9,6 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.contrib.auth import get_user
 from django.core.paginator import Paginator
+from django.contrib.auth.models import User
 
 def register(request):
     if request.method == "POST":
@@ -96,7 +97,7 @@ class UserDetails(View):
 class UserDonations(View):
     def get(self, request):
         userID = get_user(self.request).id
-        donations = Donation.objects.filter(user_id=userID).order_by("is_taken")
+        donations = Donation.objects.filter(user_id=userID).order_by("is_taken","pick_up_date","pk")
         return render(request, "user_donations.html",{"donations": donations})
 
 class PickUpDonation(View):
@@ -114,3 +115,27 @@ class CancelPickUpDonation(View):
         donation.taken_date = None
         donation.save()
         return redirect("userdonations")
+
+class UserProfileEdit(View):
+    def get(self, request, user_id):
+        user = User.objects.get(id=user_id)
+        return render(request, "edit_user_profile.html", context={"user": user})
+    def post(self, request, user_id):
+        user = User.objects.get(id=user_id)
+        first_name = request.POST.get("first_name")
+        last_name = request.POST.get("last_name")
+        username = request.POST.get("username")
+        if not first_name:
+            return render(request, "edit_user_profile.html", context={"error": "Podaj imię"})
+        if not last_name:
+            return render(request, "edit_user_profile.html", context={"error": "Podaj nazwisko"})
+        if not username:
+            return render(request, "edit_user_profile.html", context={"error": "Podaj email"})
+        try:
+            user.first_name = first_name
+            user.last_name = last_name
+            user.username = username
+            user.save()
+        except:
+            return render(request, "edit_user_profile.html", context={"error": "Użytkownik o podanym mailu już istnieje "})
+        return redirect("/")
