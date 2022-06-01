@@ -7,6 +7,7 @@ function checkInstitutions() {
     categoriesID = []
     var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
 
+
     for (var i = 0; i < checkboxes.length; i++) {
         categoriesID.push(checkboxes[i].value)
 

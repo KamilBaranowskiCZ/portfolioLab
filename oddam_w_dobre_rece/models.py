@@ -38,7 +38,7 @@ class Donation(models.Model):
     pick_up_comment = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     is_taken = models.BooleanField(default=False)
-    taken_date = models.DateField(null=True)
+    taken_date = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return f'{self.address}, {self.pick_up_date} {self.quantity} worków, dla {self.institution}'

@@ -59,7 +59,7 @@
     </div>
   </div>
   {% if user.is_authenticated %}
-  <a href="{% url 'adddonation' %}#register-page" class="btn btn--large">Przekaż dary</a>
+  <a href="{% url 'adddonation' %}#form--steps" class="btn btn--large">Przekaż dary</a>
 </section>
   {% else %}
   <a href="{% url 'register' %}#register-page" class="btn btn--large">Załóż konto</a>
