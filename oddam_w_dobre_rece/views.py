@@ -4,7 +4,7 @@ from django.views import View
 from django.contrib import messages
 
 from oddam_w_dobre_rece.models import Category, Donation, Institution
-from .forms import RegisterForm
+from .forms import RegisterForm, DonationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.contrib.auth import get_user
@@ -65,12 +65,16 @@ class AddDonation(LoginRequiredMixin, View):
     def get(self, request):
         categories = Category.objects.all()
         institutions = Institution.objects.all()
-        return render(request, "form.html", {"categories": categories, "institutions": institutions})
+        form = DonationForm()
+        return render(request, "form.html", {"categories": categories, "institutions": institutions, "form": form})
+
+        
 
 
 class ConfrimDonation(View):
     def post(self, request):
-        donation = Donation.objects.create(
+        try:
+            donation = Donation.objects.create(
                 quantity=request.POST["bags"],
                 institution=Institution.objects.get(id=request.POST["organization"]),
                 address=request.POST["address"],
@@ -82,10 +86,12 @@ class ConfrimDonation(View):
                 pick_up_comment=request.POST["more_info"],
                 user=get_user(self.request)
             )
-        categories = request.POST.getlist("categories")
-        for category in categories:          
-            donation.categories.add(category)
-        donation.save()
+            categories = request.POST.getlist("categories")
+            for category in categories:          
+                donation.categories.add(category)
+            donation.save()
+        except:
+            return redirect("adddonation")
         return render(request, "form-confirmation.html")
 
 

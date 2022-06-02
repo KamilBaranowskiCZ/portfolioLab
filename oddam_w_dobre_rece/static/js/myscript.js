@@ -1,3 +1,69 @@
+function enableFirstStep() {
+    var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+    if(checkboxes.length > 0){
+        document.getElementById('firstBtn').disabled = false;
+    }
+    else{
+        document.getElementById('firstBtn').disabled = true;
+    }
+  }
+function enableSecondStep() {
+    bags = document.querySelector('input[name=bags]').value
+    if(bags > 0){
+        document.getElementById('secondBtn').disabled = false;
+    }
+    else{
+        document.getElementById('secondBtn').disabled = true;
+    }
+  }
+function enableThirdStep() {
+    institutions = document.querySelector('input[type=radio][name=organization]:checked');
+    if(institutions){
+        document.getElementById('thirdBtn').disabled = false;
+    }
+    else{
+        document.getElementById('thirdBtn').disabled = true;
+    }
+  }
+function enableFourthStep() {
+    var street = document.getElementsByName('address')[0].value
+    var city = document.getElementsByName('city')[0].value
+    var postcode = document.getElementsByName('postcode')[0].value
+    var phone = document.getElementsByName('phone')[0].value
+    var date = document.getElementsByName('data')[0].value
+    var time = document.getElementsByName('time')[0].value
+    var more_info = document.getElementsByName('more_info')[0].value
+    var postcode_pattern = /[0-9]{2}-[0-9]{3}$/;
+    var phone_pattern = /^(?:\(?\?)?(?:[-\.\(\)\s]*(\d)){9}\)?$/
+    postcode_validation = postcode_pattern.test(postcode)
+    phone_validation = phone_pattern.test(phone)
+    function checkDate(date){
+        const today = new Date()
+        today.setHours(0, 0, 0, 0);
+        const tomorrow = new Date(today)
+        tomorrow.setDate(tomorrow.getDate() + 1)
+        console.log(Date(date))
+        console.log(tomorrow)
+        if(new Date(date) > tomorrow){
+            console.log("tak")
+            return true
+        }
+        else{
+            console.log("nie")
+            return false
+        }
+
+    }
+
+    
+    if(street && city && more_info && time && postcode_validation && phone_validation && checkDate(date)){
+        document.getElementById('fourthBtn').disabled = false;
+    }
+    else{
+        document.getElementById('fourthBtn').disabled = true;
+    }
+  }
+
 document.getElementById('firstBtn').addEventListener('click', function(){
     checkInstitutions();
     institutionNames();
@@ -6,7 +72,6 @@ document.getElementById('firstBtn').addEventListener('click', function(){
 function checkInstitutions() {
     categoriesID = []
     var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
-
 
     for (var i = 0; i < checkboxes.length; i++) {
         categoriesID.push(checkboxes[i].value)
@@ -70,10 +135,9 @@ function getInstitutions() {
     return title
 }
 
-document.getElementById('forthBtn').addEventListener('click', function(){
+document.getElementById('fourthBtn').addEventListener('click', function(){
     getAddress();
     fillSummary();
-    fillForm();
 });
 
 
