@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
+from django.forms import ValidationError
 TypesOfInstituion = (
         ('Foundation', "Fundacja"),
         ('Non-governmental organization', "Organizacja pozarządowa"),
@@ -42,3 +43,8 @@ class Donation(models.Model):
 
     def __str__(self):
         return f'{self.address}, {self.pick_up_date} {self.quantity} worków, dla {self.institution}'
+
+    def save(self, *args, **kwargs):
+        self.clean_fields()      
+        self.clean()             
+        return super(Donation, self).save(*args, **kwargs)

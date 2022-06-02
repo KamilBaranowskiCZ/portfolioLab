@@ -2,8 +2,8 @@
 {% load static %}
 {% block startheader %}
 <header class="header--form-page">
-{% endblock %}
-{% block endheader %}
+  {% endblock %}
+  {% block endheader %}
 
   <div class="slogan container container--90">
     <div class="slogan--item">
@@ -65,7 +65,8 @@
         {% for category in categories %}
         <div class="form-group form-group--checkbox">
           <label>
-            <input type="checkbox" id="categories"name="categories" class="categories" value="{{category.id}}" />
+            <input type="checkbox" id="categories" name="categories" class="categories" value="{{category.id}}"
+              onchange="enableFirstStep()" />
             <span class="checkbox"></span>
             <span class="description">{{category}}</span>
           </label>
@@ -73,7 +74,7 @@
         {% endfor %}
 
         <div class="form-group form-group--buttons">
-          <button type="button" id="firstBtn" class="btn next-step">Dalej</button>
+          <button type="button" id="firstBtn" class="btn next-step" disabled>Dalej</button>
         </div>
       </div>
 
@@ -84,13 +85,13 @@
         <div class="form-group form-group--inline">
           <label>
             Liczba 60l worków:
-            <input type="number" name="bags" step="1" min="1" />
+            <input type="number" name="bags" step="1" min="1" onchange="enableSecondStep()" />
           </label>
         </div>
 
         <div class="form-group form-group--buttons">
           <button type="button" class="btn prev-step">Wstecz</button>
-          <button type="button" id="secondBtn" class="btn next-step">Dalej</button>
+          <button type="button" id="secondBtn" class="btn next-step" disabled>Dalej</button>
         </div>
       </div>
 
@@ -104,7 +105,7 @@
         {{cat.id}}, 
         {% endfor %}">
           <label>
-            <input type="radio" name="organization" value="{{institution.id}}" />
+            <input type="radio" name="organization" value="{{institution.id}}" onchange="enableThirdStep()" />
             <span class="checkbox radio"></span>
             <span class="description">
               <div class="title">{{institution.name}}</div>
@@ -117,7 +118,7 @@
         {% endfor %}
         <div class="form-group form-group--buttons">
           <button type="button" class="btn prev-step">Wstecz</button>
-          <button type="button" id="thirdBtn" class="btn next-step">Dalej</button>
+          <button type="button" id="thirdBtn" class="btn next-step" disabled>Dalej</button>
         </div>
       </div>
 
@@ -129,22 +130,22 @@
           <div class="form-section--column">
             <h4>Adres odbioru</h4>
             <div class="form-group form-group--inline">
-              <label> Ulica <input type="text" name="address" /> </label>
+              <label> Ulica <input type="text" name="address" onchange="enableFourthStep()" /> </label>
             </div>
 
             <div class="form-group form-group--inline">
-              <label> Miasto <input type="text" name="city" /> </label>
+              <label> Miasto <input type="text" name="city" onchange="enableFourthStep()" /> </label>
             </div>
 
             <div class="form-group form-group--inline">
               <label>
-                Kod pocztowy <input type="text" name="postcode" />
+                Kod pocztowy <input type="text" name="postcode" onchange="enableFourthStep()" />
               </label>
             </div>
 
             <div class="form-group form-group--inline">
               <label>
-                Numer telefonu <input type="phone" name="phone" />
+                Numer telefonu <input type="phone" name="phone" onchange="enableFourthStep()" />
               </label>
             </div>
           </div>
@@ -152,24 +153,24 @@
           <div class="form-section--column">
             <h4>Termin odbioru</h4>
             <div class="form-group form-group--inline">
-              <label> Data <input type="date" name="data" /> </label>
+              <label> Data <input type="date" name="data" onchange="enableFourthStep()" /> </label>
             </div>
 
             <div class="form-group form-group--inline">
-              <label> Godzina <input type="time" name="time" /> </label>
+              <label> Godzina <input type="time" name="time" onchange="enableFourthStep()" /> </label>
             </div>
 
             <div class="form-group form-group--inline">
               <label>
                 Uwagi dla kuriera
-                <textarea name="more_info" rows="5"></textarea>
+                <textarea name="more_info" rows="5" onchange="enableFourthStep()"></textarea>
               </label>
             </div>
           </div>
         </div>
         <div class="form-group form-group--buttons">
           <button type="button" class="btn prev-step">Wstecz</button>
-          <button type="button" id="forthBtn" class="btn next-step">Dalej</button>
+          <button type="button" id="fourthBtn" class="btn next-step" disabled>Dalej</button>
         </div>
       </div>
 
@@ -225,5 +226,5 @@
 </section>
 {% endblock %}
 {% block script %}
-<script src="{% static 'js/myscript.js' %}"></script> 
+<script src="{% static 'js/myscript.js' %}"></script>
 {% endblock %}
