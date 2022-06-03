@@ -42,14 +42,10 @@ function enableFourthStep() {
         today.setHours(0, 0, 0, 0);
         const tomorrow = new Date(today)
         tomorrow.setDate(tomorrow.getDate() + 1)
-        console.log(Date(date))
-        console.log(tomorrow)
         if(new Date(date) > tomorrow){
-            console.log("tak")
             return true
         }
         else{
-            console.log("nie")
             return false
         }
 
